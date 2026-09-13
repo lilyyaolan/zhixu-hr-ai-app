@@ -1,0 +1,30 @@
+{
+  "endpoint": "/api/ai/parse",
+  "method": "POST",
+  "request": {
+    "speech": "string",
+    "industry": "string",
+    "available_categories": [
+      "string"
+    ],
+    "current_draft": "object|null",
+    "instruction": "string",
+    "schema": "object"
+  },
+  "response": {
+    "title": "string",
+    "category": "string",
+    "priority": "普通|重要|紧急",
+    "due": "YYYY-MM-DD",
+    "intent": "string",
+    "confidence": 0.93,
+    "rationale": "short explanation"
+  },
+  "hard_rules": [
+    "Return exactly one task.",
+    "Do not invent facts, deadlines, names, or outcomes.",
+    "If user is correcting the current task, update the same task.",
+    "Preserve user intent over linguistic polishing.",
+    "If uncertain, lower confidence instead of guessing."
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "mode": "BYOK (Bring Your Own Key)",
+  "cost_owner": "end_user",
+  "default_mode": "local",
+  "persistence": {
+    "endpoint": "localStorage",
+    "model": "localStorage",
+    "api_key": "sessionStorage only"
+  },
+  "compatible_request_format": "OpenAI-compatible chat completions",
+  "fallback": "local rule engine",
+  "security_note": "Static front-end cannot fully hide API keys. Enterprise cloud edition should proxy through backend."
+}

@@ -1,0 +1,1502 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<meta name="theme-color" content="#edf5ff"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="default"/>
+<meta name="apple-mobile-web-app-title" content="知序HR"/>
+<link rel="apple-touch-icon" href="icons/icon-192.png"/>
+
+<link rel="manifest" href="manifest.json">
+<title>知序 · HR成长工作台</title>
+<style>
+:root{
+  --bg:#eef5ff;
+  --card:#ffffff;
+  --text:#15233b;
+  --muted:#7d8aa4;
+  --line:#e8eef6;
+  --blue:#3f79f7;
+  --blue2:#5f8ff8;
+  --green:#37c998;
+  --red:#ff6c75;
+  --purple:#8e78ea;
+  --orange:#ffad45;
+  --shadow:0 10px 30px rgba(69,93,135,.08);
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:linear-gradient(#eef5ff,#f8fbff);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;color:var(--text)}
+body{min-height:100vh}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+.app{max-width:720px;margin:0 auto;padding:18px 16px 118px}
+.header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px}
+.brand{font-size:26px;font-weight:850;letter-spacing:-.5px}
+.sub{color:#99a6bb;font-size:14px;margin-top:5px}
+.user{display:flex;align-items:center;gap:10px}
+.avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#d8e6ff,#fff);display:grid;place-items:center;font-weight:800;box-shadow:var(--shadow)}
+.date{font-size:13px;color:#54627b;text-align:right}
+.card{background:rgba(255,255,255,.96);border:1px solid rgba(222,232,245,.92);border-radius:22px;padding:17px;margin:13px 0;box-shadow:var(--shadow)}
+.quoteCard{background:linear-gradient(135deg,#fefefe 0%,#edf5ff 58%,#e9f5ff 100%)}
+.sectionHead{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.sectionTitle{font-size:18px;font-weight:800}
+.more{border:none;background:transparent;color:#6f7e98}
+.quote{font-size:20px;line-height:1.65;font-weight:800;margin:14px 0 8px}
+.source,.hint{font-size:13px;color:var(--muted);line-height:1.6}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
+.stat{border-radius:16px;padding:14px 8px;text-align:center}
+.stat:nth-child(1){background:#eef6ff}
+.stat:nth-child(2){background:#edfbf5}
+.stat:nth-child(3){background:#fff0f2}
+.stat:nth-child(4){background:#f4efff}
+.stat b{font-size:24px;display:block}
+.stat span{font-size:12px;color:#71809a}
+.task{padding:14px 2px;border-top:1px solid var(--line);display:grid;grid-template-columns:34px 1fr auto;gap:10px;align-items:start}
+.task:first-of-type{border-top:none}
+.num{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-weight:800;background:#edf4ff;color:#3f79f7}
+.taskTitle{font-weight:800;margin-bottom:5px}
+.taskDesc{font-size:13px;color:var(--muted);line-height:1.5}
+.taskRight{text-align:right;min-width:96px}
+.tag{display:inline-block;padding:4px 9px;border-radius:999px;background:#eef4ff;color:#4173df;font-size:11px;font-weight:700}
+.time{margin-top:8px;font-size:12px;color:#6f7e98}
+.valueGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+.valueBox{border-radius:16px;padding:14px 11px}
+.valueBox:nth-child(1){background:#edf6ff}.valueBox:nth-child(2){background:#effaf6}.valueBox:nth-child(3){background:#fff6e9}
+.valueBox b{display:block;margin-bottom:6px}.valueBox span{font-size:12px;color:#748199}
+.learn{display:grid;grid-template-columns:58px 1fr auto;gap:12px;align-items:center;margin-top:10px}
+.learnIcon{width:58px;height:58px;border-radius:14px;background:linear-gradient(135deg,#f2f2f2,#dfe6ef);display:grid;place-items:center;font-size:23px;font-weight:900}
+.learn b{display:block;margin-bottom:5px}
+.learn p{margin:0;color:var(--muted);font-size:13px}
+.primarySmall{border:none;border-radius:14px;padding:10px 14px;background:#eaf2ff;color:#3172eb;font-weight:800}
+.bottomNav{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;justify-content:center}
+.bottomInner{width:min(720px,100%);position:relative;background:rgba(255,255,255,.96);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(6,1fr);padding:11px 8px calc(11px + env(safe-area-inset-bottom));box-shadow:0 -8px 25px rgba(50,70,110,.08)}
+.navBtn{border:none;background:transparent;color:#68768f;font-size:12px;font-weight:700;padding:6px 3px}
+.navBtn.active{color:var(--blue)}
+.navIcon{display:block;font-size:21px;margin-bottom:3px}
+.voiceDock{position:fixed;left:50%;bottom:49px;transform:translateX(-50%);z-index:30;display:flex;flex-direction:column;align-items:center}
+.voiceHalo{width:92px;height:92px;border-radius:50%;background:rgba(72,122,247,.12);display:grid;place-items:center;box-shadow:0 0 0 10px rgba(72,122,247,.07)}
+.voiceBtn{width:76px;height:76px;border-radius:50%;border:none;background:linear-gradient(180deg,#4c86ff,#2f6ded);color:white;font-weight:800;box-shadow:0 10px 28px rgba(58,108,228,.35);font-size:13px}
+.voiceBtn .mic{font-size:26px;display:block;margin-bottom:3px}
+.voiceText{position:absolute;bottom:91px;white-space:nowrap;background:white;border:1px solid var(--line);border-radius:16px;padding:7px 12px;color:#6e7d96;font-size:12px;box-shadow:var(--shadow)}
+.panel{display:none}.panel.active{display:block}
+.formGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+input,select,textarea{width:100%;border:1px solid var(--line);border-radius:14px;padding:12px;background:white;color:var(--text)}
+textarea{min-height:92px;resize:vertical}
+.btn{border:none;border-radius:14px;padding:12px 14px;background:var(--blue);color:white;font-weight:800}
+.btn.soft{background:#edf4ff;color:#3f79f7}
+.report{white-space:pre-wrap;border-radius:16px;background:#f8fbff;padding:14px;border:1px dashed #d8e4f2;line-height:1.7;font-size:14px}
+.calHead{display:flex;justify-content:space-between;align-items:center}
+.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:12px}
+.dayName,.day{font-size:12px;text-align:center;padding:8px 2px}
+.dayName{color:#8b97aa}
+.day{background:#f8fbff;border-radius:10px;min-height:36px;position:relative}
+.day.has::after{content:"";position:absolute;width:5px;height:5px;border-radius:50%;background:#4c7df4;bottom:4px;left:50%;transform:translateX(-50%)}
+.barRow{margin:12px 0}.barTop{display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px}.barTrack{height:9px;background:#edf2f7;border-radius:999px;overflow:hidden}.barFill{height:100%;background:linear-gradient(90deg,#5f8ff8,#75a5ff)}
+.toast{position:fixed;left:50%;bottom:150px;transform:translateX(-50%);background:#1f2b3e;color:white;padding:10px 14px;border-radius:12px;font-size:13px;opacity:0;pointer-events:none;transition:.25s;z-index:99}
+.toast.show{opacity:1}
+.modalMask{position:fixed;inset:0;background:rgba(18,30,52,.42);z-index:200;display:none;align-items:center;justify-content:center;padding:18px}
+.modalMask.show{display:flex}
+.modal{width:min(620px,100%);max-height:88vh;overflow:auto;background:#fff;border-radius:24px;padding:20px;box-shadow:0 25px 70px rgba(20,35,60,.25)}
+.stepDots{display:flex;gap:6px;margin:10px 0 16px}.stepDot{width:28px;height:6px;border-radius:999px;background:#e7edf6}.stepDot.active{background:#4a7cf0}
+.guideBox{background:#f6f9ff;border:1px solid #e1e9f6;border-radius:16px;padding:14px;margin:10px 0;line-height:1.7}
+
+.installBanner{position:fixed;left:14px;right:14px;top:12px;z-index:160;background:#fff;border:1px solid #dfe8f6;border-radius:18px;padding:12px 14px;box-shadow:0 14px 32px rgba(41,69,113,.18);display:none;align-items:center;gap:10px}
+.installBanner.show{display:flex}
+.installBanner .grow{flex:1}
+.installBanner b{display:block;font-size:14px;margin-bottom:3px}
+.installBanner span{font-size:12px;color:#75839b}
+.installBanner button{border:none;border-radius:12px;padding:9px 11px;background:#edf4ff;color:#3272ec;font-weight:800}
+.platformHint{font-size:12px;color:#7d8aa4;line-height:1.6;margin-top:8px}
+@media(max-width:560px){
+  .brand{font-size:23px}.stats{gap:7px}.stat{padding:12px 5px}.valueGrid{grid-template-columns:1fr 1fr 1fr}.learn{grid-template-columns:50px 1fr}.learn .primarySmall{grid-column:2}.formGrid{grid-template-columns:1fr}.quote{font-size:18px}
+}
+</style>
+</head>
+<body>
+
+<div class="installBanner" id="installBanner">
+  <div class="grow">
+    <b>安装到手机桌面</b>
+    <span id="installHint">像APP一样打开，使用更方便</span>
+  </div>
+  <button id="installBtn" onclick="installPWA()">安装</button>
+  <button onclick="dismissInstall()">稍后</button>
+</div>
+
+<div class="app">
+  <header class="header">
+    <div>
+      <div class="brand">知序 · HR成长工作台</div>
+      <div class="sub">让每一份HR工作，都更有价值 · V3.0 销售版</div>
+    </div>
+    <div class="user">
+      <div>
+        <div class="date" id="dateText"></div>
+        <div class="date">做有价值的HR</div>
+      </div>
+      <div class="avatar">HR</div>
+    </div>
+  </header>
+
+  <section id="todayPanel" class="panel active">
+    <div class="card quoteCard">
+      <div class="sectionHead">
+        <div class="sectionTitle">☀️ HR每日一句 · 10000+内容库</div>
+        <button class="more" onclick="changeQuote()">换一句</button>
+      </div>
+      <div class="quote" id="quote"></div>
+      <div class="source" id="quoteSource"></div>
+      <div class="hint">HR成长提醒：从事务执行者，走向组织价值创造者。</div>
+    </div>
+
+    <div class="card" id="voiceDraftCard" style="display:none;border:1px solid #cfe0ff">
+      <div class="sectionHead">
+        <div class="sectionTitle">🎙 语音归纳确认</div>
+        <span class="tag">待确认</span>
+      </div>
+      <div class="hint" style="margin-top:8px">系统已根据你的语音整理成下面这条事项。确认无误后再正式写入。</div>
+      <input id="draftTitle" style="margin-top:10px">
+      <div class="formGrid" style="margin-top:10px">
+        <select id="draftCategory"></select>
+        <select id="draftPriority"><option>普通</option><option>重要</option><option>紧急</option></select>
+        <input id="draftDue" type="date">
+        <input id="draftIntent" placeholder="识别意图">
+      </div>
+      <div id="draftConfidence" class="hint" style="margin-top:8px"></div>
+      <div class="hint" id="draftRaw" style="margin-top:6px"></div>
+      <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+        <button class="btn" onclick="confirmVoiceDraft()">确认写入</button>
+        <button class="btn soft" onclick="cancelVoiceDraft()">重新说</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="sectionHead">
+        <div class="sectionTitle">📊 今日概览</div>
+        <button class="more" onclick="openPanel('tasks')">查看全部 ›</button>
+      </div>
+      <div class="stats" id="stats"></div>
+    </div>
+
+    <div class="card">
+      <div class="sectionHead">
+        <div class="sectionTitle">🎯 今日重点 <span style="font-size:11px;color:#7d8aa4;font-weight:600">（展示归纳结果）</span></div>
+        <button class="more" onclick="openPanel('tasks')">全部事项 ›</button>
+      </div>
+      <div id="focusTasks"></div>
+    </div>
+
+    <div class="card">
+      <div class="sectionHead">
+        <div class="sectionTitle">📈 今日工作价值</div>
+        <button class="more" onclick="openPanel('analysis')">查看分析 ›</button>
+      </div>
+      <div class="valueGrid" id="todayValues"></div>
+    </div>
+
+    <div class="card">
+      <div class="sectionHead">
+        <div class="sectionTitle">📖 今天学一点</div>
+        <button class="more">查看更多 ›</button>
+      </div>
+      <div class="learn">
+        <div class="learnIcon">HR</div>
+        <div>
+          <b id="learnTitle">1分钟HR知识：SMART目标</b>
+          <p id="learnText">让目标更清晰、可衡量、可落地、可达成。</p>
+        </div>
+        <button class="primarySmall" onclick="showLearn()">去学习 ›</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="tasksPanel" class="panel">
+    <div class="card">
+      <div class="sectionHead">
+        <div class="sectionTitle">工作事项</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end">
+          <button class="btn soft" onclick="exportExcel()">导出Excel</button>
+          <button class="btn soft" onclick="seedDemo()">示例数据</button>
+        </div>
+      </div>
+      <div id="allTasks"></div>
+    </div>
+    <div class="card">
+      <div class="sectionHead">
+        <div class="sectionTitle">回收站</div>
+        <button class="btn soft" onclick="clearRecycle()">清空回收站</button>
+      </div>
+      <div class="hint" style="margin:8px 0 4px">误删事项会先进入这里，可恢复。</div>
+      <div id="recycleList"></div>
+    </div>
+    <div class="card">
+      <div class="sectionTitle" style="margin-bottom:12px">新增事项</div>
+      <div class="formGrid">
+        <input id="taskTitle" placeholder="事项名称">
+        <input id="taskDue" type="date">
+        <select id="taskCategory"></select>
+        <select id="taskPriority"><option>普通</option><option>重要</option><option>紧急</option></select>
+        <select id="taskReminder"><option value="当天">当天提醒</option><option value="提前1天">提前1天</option><option value="提前3天">提前3天</option><option value="不提醒">不提醒</option></select>
+      </div>
+      <textarea id="taskNote" placeholder="备注、领导交办来源、关键要求" style="margin-top:10px"></textarea>
+      <button class="btn" style="margin-top:10px" onclick="manualAdd()">保存事项</button>
+    </div>
+  </section>
+
+  <section id="calendarPanel" class="panel">
+    <div class="card">
+      <div class="calHead">
+        <button class="btn soft" onclick="changeMonth(-1)">‹</button>
+        <div class="sectionTitle" id="calendarTitle"></div>
+        <button class="btn soft" onclick="changeMonth(1)">›</button>
+      </div>
+      <div class="calendar" id="calendar"></div>
+    </div>
+    <div class="card">
+      <div class="sectionTitle">本月到期事项</div>
+      <div id="monthTasks"></div>
+    </div>
+  </section>
+
+  <section id="reportPanel" class="panel">
+    <div class="card">
+      <div class="sectionHead">
+        <div class="sectionTitle">自动工作汇报</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end">
+          <button class="btn soft" onclick="genReport('day')">日报</button>
+          <button class="btn soft" onclick="genReport('week')">周报</button>
+          <button class="btn soft" onclick="genReport('month')">月报</button>
+          <button class="btn soft" onclick="exportExcel()">导出Excel</button>
+        </div>
+      </div>
+      <div class="report" id="reportBox">选择日报、周报或月报，即可生成。</div>
+    </div>
+  </section>
+
+  <section id="analysisPanel" class="panel">
+    <div class="card">
+      <div class="sectionTitle">工作分析</div>
+      <div class="report" id="analysisText"></div>
+      <div class="hint" style="margin-top:10px">价值评分依据：业务影响25% + 风险影响20% + 人才影响15% + 组织影响15% + 时效影响10% + 持续价值15%，并结合事项关键词与优先级调整。系统初评可后续允许人工修正。</div>
+    </div>
+    <div class="card">
+      <div class="sectionTitle">HR模块工作量</div>
+      <div id="categoryBars"></div>
+    </div>
+    <div class="card">
+      <div class="sectionTitle">工作价值分布</div>
+      <div id="valueBars"></div>
+    </div>
+  </section>
+</div>
+
+
+  <section id="settingsPanel" class="panel">
+    <div class="card">
+      <div class="sectionTitle">行业与模块设置</div>
+      <div class="hint" style="margin:8px 0 12px">选择行业后，系统会加载对应HR工作分类；仍可自定义。</div>
+      <select id="industrySelect" onchange="changeIndustry(this.value)">
+        <option>通用版</option>
+        <option>建筑工程</option>
+        <option>制造业</option>
+        <option>零售连锁</option>
+        <option>互联网科技</option>
+        <option>服务业</option>
+        <option>自定义行业</option>
+      </select>
+      <div style="margin-top:14px">
+        <div class="sectionTitle" style="font-size:15px">自定义分类</div>
+        <div style="display:flex;gap:8px;margin-top:8px">
+          <input id="customCategoryInput" placeholder="例如：校招、海外人力、门店培训">
+          <button class="btn" onclick="addCustomCategory()">添加</button>
+        </div>
+        <div id="customCategoryList" style="margin-top:10px"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="sectionTitle">AI增强（可选）</div>
+      <div class="hint" style="margin:8px 0 12px">
+        默认使用本地免费模式，不产生持续AI费用。需要更强语义理解时，可启用“自带AI”，费用由用户自己的AI账户承担。
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px">
+        <button id="localModeBtn" class="btn soft" onclick="setAiMode('local')">本地免费模式</button>
+        <button id="byokModeBtn" class="btn soft" onclick="setAiMode('byok')">自带AI增强</button>
+      </div>
+
+      <div id="byokSettings" style="display:none;margin-top:14px">
+        <div class="hint" style="margin-bottom:8px">
+          适用于支持 OpenAI 兼容格式的AI接口。API Key只保存在当前浏览器会话中，关闭浏览器后自动清除。
+        </div>
+        <input id="aiEndpointInput" placeholder="AI接口地址，例如：https://.../v1/chat/completions">
+        <input id="aiModelInput" style="margin-top:8px" placeholder="模型名称">
+        <input id="aiKeyInput" type="password" style="margin-top:8px" placeholder="输入你自己的 API Key">
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+          <button class="btn" onclick="saveByokSettings()">保存本次会话</button>
+          <button class="btn soft" onclick="testAiConnection()">测试AI连接</button>
+          <button class="btn soft" onclick="clearAiKey()">清除Key</button>
+        </div>
+        <div class="hint" style="margin-top:10px">
+          安全提示：本地网页无法做到像服务器那样完全隐藏Key，因此不建议在公共电脑使用。正式企业云端版应通过后端代理保护密钥。
+        </div>
+      </div>
+
+      <div id="aiStatus" class="hint" style="margin-top:12px"></div>
+    </div>
+
+    <div class="card">
+      <div class="sectionTitle">数据备份与恢复</div>
+      <div class="hint" style="margin:8px 0 12px">建议每周备份一次。备份文件保存在你的电脑中，不上传服务器。</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn soft" onclick="backupAllData()">导出数据备份</button>
+        <button class="btn soft" onclick="document.getElementById('restoreFile').click()">恢复数据</button>
+        <input id="restoreFile" type="file" accept=".json" style="display:none" onchange="restoreAllData(event)">
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="sectionTitle">产品与隐私</div>
+      <div class="guideBox">
+        <b>当前版本：</b>V3.0 销售成品版<br>
+        <b>默认模式：</b>本地使用，不上传HR工作数据<br>
+        <b>AI增强：</b>可选，用户自带AI接口和Key<br>
+        <b>数据位置：</b>当前浏览器本地存储
+      </div>
+      <div class="hint">
+        请勿在公共电脑长期保存敏感人事数据。更换电脑或清理浏览器数据前，请先导出备份。
+      </div>
+      <button class="btn soft" style="margin-top:10px" onclick="showOnboarding()">重新查看使用引导</button>
+    </div>
+
+    
+    <div class="card">
+      <div class="sectionTitle">手机与系统兼容</div>
+      <div class="guideBox">
+        <b>安卓：</b>推荐 Chrome / Edge / 系统主流浏览器<br>
+        <b>iPhone：</b>推荐 Safari，并通过“分享 → 添加到主屏幕”安装<br>
+        <b>鸿蒙：</b>推荐系统浏览器或 Chrome 内核浏览器；如支持PWA可直接添加到桌面
+      </div>
+      <div class="platformHint">
+        语音、通知、后台提醒能力受不同系统和浏览器权限影响。核心事项记录、分类、汇报、Excel导出、备份等功能不依赖系统级推送。
+      </div>
+      <button class="btn soft" style="margin-top:10px" onclick="showInstallHelp()">查看安装方法</button>
+    </div>
+
+<div class="card">
+      <div class="sectionTitle">提醒设置</div>
+      <div class="hint" style="margin:8px 0 12px">第一版先做浏览器提醒；正式云端版可接手机推送和日历同步。</div>
+      <button class="btn soft" onclick="requestNotifyPermission()">开启浏览器提醒权限</button>
+      <div id="notifyStatus" class="hint" style="margin-top:10px"></div>
+    </div>
+  </section>
+
+<div class="voiceDock">
+  <div class="voiceText" id="voiceTip">随手记一件事 · 自动去口语、整理并归纳；识别异常可手工录入</div>
+  <button id="finishVoiceBtn" onclick="finishVoiceConversation()" style="position:absolute;bottom:92px;right:-86px;border:none;background:#fff;color:#3f79f7;border-radius:14px;padding:7px 10px;font-size:12px;box-shadow:var(--shadow);display:none">完成本条</button>
+  <div class="voiceHalo">
+    <button class="voiceBtn" id="voiceBtn" onmousedown="startVoice()" ontouchstart="startVoice(event)">
+      <span class="mic">🎙</span><span id="voiceLabel">按住说话</span>
+    </button>
+  </div>
+</div>
+
+<div class="bottomNav">
+  <div class="bottomInner">
+    <button class="navBtn active" id="nav-today" onclick="openPanel('today')"><span class="navIcon">⌂</span>今天</button>
+    <button class="navBtn" id="nav-tasks" onclick="openPanel('tasks')"><span class="navIcon">✓</span>事项</button>
+    <button class="navBtn" id="nav-calendar" onclick="openPanel('calendar')"><span class="navIcon">▣</span>日历</button>
+    <button class="navBtn" id="nav-report" onclick="openPanel('report')"><span class="navIcon">▤</span>汇报</button>
+    <button class="navBtn" id="nav-analysis" onclick="openPanel('analysis')"><span class="navIcon">◉</span>分析</button>
+    <button class="navBtn" id="nav-settings" onclick="openPanel('settings')"><span class="navIcon">⚙</span>设置</button>
+  </div>
+</div>
+
+<div class="modalMask" id="onboardingMask">
+  <div class="modal">
+    <div class="sectionHead">
+      <div class="sectionTitle">欢迎使用「知序 · HR AI工作管家」</div>
+      <button class="more" onclick="finishOnboarding()">跳过</button>
+    </div>
+    <div class="stepDots">
+      <div class="stepDot active" id="dot1"></div>
+      <div class="stepDot" id="dot2"></div>
+      <div class="stepDot" id="dot3"></div>
+      <div class="stepDot" id="dot4"></div>
+    </div>
+    <div id="onboardingContent"></div>
+    <div style="display:flex;justify-content:space-between;gap:10px;margin-top:16px">
+      <button class="btn soft" id="prevGuideBtn" onclick="prevOnboarding()">上一步</button>
+      <button class="btn" id="nextGuideBtn" onclick="nextOnboarding()">下一步</button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const baseCategories=["人力资源规划","招聘配置","培训开发","绩效管理","薪酬福利","员工关系","组织发展","人才盘点","企业文化","行政协同","领导交办","项目支持","风险合规","其他"];
+const industryExtras={
+ "通用版":[],
+ "建筑工程":["资质证照","项目人员管理","安许与证书"],
+ "制造业":["班次工时","劳务用工","现场培训","安全协同"],
+ "零售连锁":["门店人员","排班管理","区域用工","流动率管理"],
+ "互联网科技":["OKR协同","研发组织","人才盘点","关键人才"],
+ "服务业":["门店/网点人员","排班与服务","客户现场支持"],
+ "自定义行业":[]
+};
+function getCategories(){
+ return [...new Set([...baseCategories,...(industryExtras[userIndustry]||[]),...customCategories])];
+}
+let categories=getCategories();
+const quotes=[
+ {q:"HR的价值，不在于处理了多少事务，而在于解决了多少组织问题。",s:"基于 Dave Ulrich 的HR价值理念整理"},
+ {q:"管理不是把人管住，而是让组织中的人能够共同创造结果。",s:"基于 Peter Drucker 的管理思想整理"},
+ {q:"优秀的HR，不只是响应业务，而是能提前看见组织需要什么。",s:"HRBP成长观点"},
+ {q:"绩效管理的意义，不是打分，而是让目标、反馈与成长真正形成闭环。",s:"绩效管理实践观点"},
+ {q:"招聘的终点不是到岗，而是人与岗位、团队和业务真正匹配。",s:"人才管理实践观点"}
+];
+const values={
+ "人力资源规划":"组织效率","招聘配置":"人才保障","培训开发":"组织能力","绩效管理":"组织效率","薪酬福利":"运营保障",
+ "员工关系":"风险控制","资质证照":"风险控制","行政管理":"运营保障","企业文化":"员工体验","党工团":"员工体验",
+ "领导交办":"经营支持","项目支持":"经营支持","其他":"运营保障"
+};
+const valueDesc={
+ "人才保障":"支持业务发展","风险控制":"降低用工与经营风险","经营支持":"助力目标达成","组织效率":"提升组织运行效率","组织能力":"促进人才成长","运营保障":"保障日常稳定运行","员工体验":"增强员工连接"
+};
+
+const industryScoreAdjust={
+ "通用版":{},
+ "建筑工程":{"资质证照":1.18,"项目支持":1.12,"风险合规":1.10},
+ "制造业":{"风险合规":1.15,"培训开发":1.08,"员工关系":1.08},
+ "零售连锁":{"招聘配置":1.10,"员工关系":1.10,"组织发展":1.05},
+ "互联网科技":{"人才盘点":1.15,"组织发展":1.12,"绩效管理":1.08},
+ "服务业":{"员工关系":1.10,"招聘配置":1.08,"培训开发":1.08},
+ "自定义行业":{}
+};
+
+const scoreRule={
+ weights:{business:.25,risk:.20,talent:.15,organization:.15,timeliness:.10,sustainability:.15},
+ base:{
+  "人力资源规划":[4,2,4,5,3,5],"招聘配置":[4,2,5,3,4,3],"培训开发":[3,1,5,4,2,5],
+  "绩效管理":[4,2,4,5,3,5],"薪酬福利":[3,4,4,3,5,3],"员工关系":[3,5,3,3,5,3],
+  "资质证照":[5,5,2,3,5,4],"行政管理":[2,3,1,3,3,2],"企业文化":[2,1,3,3,2,3],
+  "党工团":[2,3,2,2,3,3],"领导交办":[4,3,2,3,5,2],"项目支持":[5,3,3,3,5,3],"其他":[2,2,2,2,2,2]
+ },
+ keys:["business","risk","talent","organization","timeliness","sustainability"]
+};
+function calcWorkValue(t){
+ let arr=[...(scoreRule.base[t.category]||scoreRule.base["其他"])];
+ const txt=(t.title||"")+" "+(t.note||"");
+ const add=(keywords,idx)=>{if(keywords.some(k=>txt.includes(k)))arr[idx]=Math.min(5,arr[idx]+1)};
+ add(["劳动争议","仲裁","诉讼","解除","辞退","工伤","事故"],1);
+ add(["资质","安许","许可证","投标","备案","证书到期"],0);
+ add(["关键岗位","项目经理","总监","核心人才"],2);
+ add(["制度","流程","SOP","标准","机制"],5);
+ add(["逾期","今天","立即","紧急","截止"],4);
+ add(["组织架构","权责","岗位职责","审批规则"],3);
+ let total=0;
+ arr.forEach((v,i)=>{total+=(v/5)*100*scoreRule.weights[scoreRule.keys[i]]});
+ total+=t.priority==="紧急"?10:t.priority==="重要"?5:0;
+ const mul=(industryScoreAdjust[userIndustry]||{})[t.category]||1;
+ total=Math.min(100,Math.round(total*mul));
+ let level=total>=80?"战略/高价值事项":total>=60?"关键事务":total>=40?"重要事务":"一般事务";
+ return {score:total,level}
+}
+
+const rules=[
+ ["招聘","招聘配置"],["简历","招聘配置"],["面试","招聘配置"],["候选人","招聘配置"],
+ ["绩效","绩效管理"],["考核","绩效管理"],["奖金","绩效管理"],
+ ["工资","薪酬福利"],["社保","薪酬福利"],["公积金","薪酬福利"],["薪酬","薪酬福利"],
+ ["入职","员工关系"],["离职","员工关系"],["合同","员工关系"],["工伤","员工关系"],["员工","员工关系"],
+ ["培训","培训开发"],["学习","培训开发"],
+ ["资质","资质证照"],["证书","资质证照"],["安许","资质证照"],["继续教育","资质证照"],
+ ["印章","行政管理"],["工商","行政管理"],["会议","行政管理"],["车辆","行政管理"],
+ ["项目","项目支持"],["现场","项目支持"],["人员调动","项目支持"],
+ ["领导","领导交办"],["白总","领导交办"],["张总","领导交办"],["任总","领导交办"],
+ ["组织架构","人力资源规划"],["岗位职责","人力资源规划"],["编制","人力资源规划"]
+];
+let tasks=JSON.parse(localStorage.getItem("zx_hr_tasks")||"[]");
+let deletedTasks=JSON.parse(localStorage.getItem("zx_hr_deleted_tasks")||"[]");
+let userIndustry=localStorage.getItem("zx_hr_industry")||"通用版";
+let customCategories=JSON.parse(localStorage.getItem("zx_hr_custom_categories")||"[]");
+let pendingVoiceDraft=null;
+let aiMode=localStorage.getItem("zx_hr_ai_mode")||"local";
+let aiEndpoint=localStorage.getItem("zx_hr_ai_endpoint")||"";
+let aiModel=localStorage.getItem("zx_hr_ai_model")||"";
+let aiKey=sessionStorage.getItem("zx_hr_ai_key")||"";
+let onboardingDone=localStorage.getItem("zx_hr_onboarding_done")==="1";
+let activeVoiceTaskId=null;
+let activeVoiceRaw=[];
+let activeVoiceMode=false;
+let calCursor=new Date();
+
+function iso(d=new Date()){return d.toISOString().slice(0,10)}
+function save(){
+ localStorage.setItem("zx_hr_tasks",JSON.stringify(tasks));
+ localStorage.setItem("zx_hr_deleted_tasks",JSON.stringify(deletedTasks));
+}
+function toast(t){let e=document.getElementById("toast");e.textContent=t;e.classList.add("show");setTimeout(()=>e.classList.remove("show"),1800)}
+function changeQuote(){const x=quotes[Math.floor(Math.random()*quotes.length)];quote.textContent="“"+x.q+"”";quoteSource.textContent="—— "+x.s}
+function classify(text){
+ for(const [k,c] of rules){if(text.includes(k))return c}
+ const dynamic=[
+   ["门店","门店人员"],["排班","排班管理"],["班次","班次工时"],["工时","班次工时"],
+   ["劳务","劳务用工"],["OKR","OKR协同"],["研发","研发组织"],["资质","资质证照"],
+   ["安许","安许与证书"],["人才盘点","人才盘点"]
+ ];
+ for(const [k,c] of dynamic){
+   if(text.includes(k) && getCategories().includes(c)) return c;
+ }
+ return "其他"
+}return "其他"}
+function inferDate(text){
+ let d=new Date();
+ if(text.includes("明天"))d.setDate(d.getDate()+1);
+ else if(text.includes("后天"))d.setDate(d.getDate()+2);
+ else if(text.includes("下周"))d.setDate(d.getDate()+7);
+ return iso(d)
+}
+
+
+function normalizeSpeech(text){
+ let t=(text||"").trim();
+ const fillers=["嗯","啊","呃","额","那个","就是","就是说","然后","然后就是","其实","那个啥","怎么说呢","你知道吧","嘛","哈","哦","诶"];
+ fillers.forEach(f=>{
+   const safe=f.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+   t=t.replace(new RegExp("(^|[，。！？、\\\\s])"+safe+"(?=($|[，。！？、\\\\s]))","g"),"$1");
+ });
+ t=t.replace(/[嗯啊呃额]+/g,"");
+ t=t.replace(/\s+/g," ");
+ t=t.replace(/[，、]{2,}/g,"，").replace(/[。]{2,}/g,"。");
+ t=t.replace(/^(我这边|我现在|我今天|我就是|我想|我要|麻烦|帮我|需要|主要是想|主要就是想|领导说让我|领导让我)\s*/,"");
+ t=t.replace(/(这个事情|这件事情|这件事儿|这块内容|这边情况)/g,"");
+ t=t.replace(/(.{2,10})([，、 ]*\1)+/g,"$1");
+ return t.replace(/^[，。；：\s]+|[，；：\s]+$/g,"").trim();
+}
+
+function extractCoreAction(text){
+ const t=normalizeSpeech(text);
+ const actionPatterns=[
+   [/提醒我(.+)/,"提醒$1"],[/跟进一下(.+)/,"跟进$1"],[/跟进(.+)/,"跟进$1"],
+   [/确认一下(.+)/,"确认$1"],[/确认(.+)/,"确认$1"],[/整理一下(.+)/,"整理$1"],[/整理(.+)/,"整理$1"],
+   [/汇总一下(.+)/,"汇总$1"],[/汇总(.+)/,"汇总$1"],[/统计一下(.+)/,"统计$1"],[/统计(.+)/,"统计$1"],
+   [/分析一下(.+)/,"分析$1"],[/分析(.+)/,"分析$1"],[/沟通一下(.+)/,"沟通$1"],[/沟通(.+)/,"沟通$1"],
+   [/安排一下(.+)/,"安排$1"],[/安排(.+)/,"安排$1"],[/完成一下(.+)/,"完成$1"],[/完成(.+)/,"完成$1"],
+   [/制作一下(.+)/,"制作$1"],[/制作(.+)/,"制作$1"],[/做一个(.+)/,"制作$1"],[/做一份(.+)/,"制作$1"]
+ ];
+ for(const [re,rep] of actionPatterns){ if(re.test(t)) return t.replace(re,rep); }
+ return t;
+}
+
+function compressToTask(text){
+ let t=extractCoreAction(text);
+ t=t.replace(/然后|之后|完了以后/g,"，");
+ t=t.replace(/我主要是想/g,"").replace(/主要就是/g,"");
+ const clauses=t.split(/[。；;]/).map(x=>x.trim()).filter(Boolean);
+ let title=clauses.slice(0,2).join("；");
+ if(title.length>70) title=title.slice(0,70);
+ return title || "待整理事项";
+}
+
+
+function localConfidence(parsed,text){
+ let score=0.78;
+ if(parsed.category==="其他")score-=0.18;
+ if(!parsed.title || parsed.title.length<4)score-=0.20;
+ if((text||"").length>100)score-=0.08;
+ if(/不是|改成|我的意思是|应该是/.test(text||""))score-=0.05;
+ return Math.max(.35,Math.min(.95,Number(score.toFixed(2))));
+}
+
+async function parseSpeechSmart(text){
+ const fallback=summarizeSpeech(text);
+ fallback.confidence=localConfidence(fallback,text);
+ fallback.engine="本地智能规则";
+
+ if(aiMode!=="byok") return fallback;
+
+ if(!aiEndpoint || !aiModel || !aiKey){
+   fallback.engine="本地兜底";
+   fallback.rationale="AI增强未完成配置，已使用本地模式";
+   return fallback;
+ }
+
+ try{
+   const systemPrompt=`你是HR工作事项解析助手。只输出JSON，不要输出解释文字。
+目标：把用户的口语整理成且仅成一条HR工作事项。
+硬性要求：
+1. 保留用户真实意图，不擅自增加人物、截止日期、结论、原因或结果；
+2. 不能把一句话拆成多条事项；
+3. 若用户是在纠正当前事项，只修正原事项；
+4. 不确定时降低confidence，不要猜；
+5. category必须从给定分类中选；
+6. title要简洁、可执行，去掉语气词和重复表达；
+7. due若用户未明确表达日期，使用今天；
+8. 只返回JSON对象。`;
+
+   const userPayload={
+     speech:text,
+     industry:userIndustry,
+     available_categories:getCategories(),
+     current_draft:pendingVoiceDraft,
+     today:iso(),
+     output_schema:{
+       title:"string",
+       category:"string",
+       priority:"普通|重要|紧急",
+       due:"YYYY-MM-DD",
+       intent:"string",
+       confidence:"0-1 number",
+       rationale:"short string"
+     }
+   };
+
+   const resp=await fetch(aiEndpoint,{
+     method:"POST",
+     headers:{
+       "Content-Type":"application/json",
+       "Authorization":"Bearer "+aiKey
+     },
+     body:JSON.stringify({
+       model:aiModel,
+       messages:[
+         {role:"system",content:systemPrompt},
+         {role:"user",content:JSON.stringify(userPayload)}
+       ],
+       temperature:0.1
+     })
+   });
+
+   if(!resp.ok) throw new Error("HTTP "+resp.status);
+   const raw=await resp.json();
+
+   let content=raw?.choices?.[0]?.message?.content ?? raw?.output_text ?? raw?.content ?? "";
+   if(typeof content==="object") content=JSON.stringify(content);
+   content=String(content).trim().replace(/^```json\s*/i,"").replace(/^```\s*/,"").replace(/```$/,"").trim();
+
+   let data;
+   try{ data=JSON.parse(content); }
+   catch(e){ throw new Error("AI返回内容不是有效JSON"); }
+
+   return {
+     title:data.title||fallback.title,
+     category:getCategories().includes(data.category)?data.category:fallback.category,
+     priority:["普通","重要","紧急"].includes(data.priority)?data.priority:fallback.priority,
+     due:/^\d{4}-\d{2}-\d{2}$/.test(data.due||"")?data.due:fallback.due,
+     intent:data.intent||fallback.intent,
+     cleaned:fallback.cleaned,
+     confidence:typeof data.confidence==="number"?Math.max(0,Math.min(1,data.confidence)):fallback.confidence,
+     rationale:data.rationale||"",
+     engine:"用户自带AI"
+   };
+ }catch(err){
+   console.warn("BYOK AI parse failed:",err);
+   fallback.engine="本地兜底";
+   fallback.rationale="AI调用失败，已自动切回本地规则";
+   return fallback;
+ }
+}
+
+function summarizeSpeech(text){
+ const cleaned=normalizeSpeech(text);
+ const title=compressToTask(cleaned);
+ let category=classify(cleaned);
+ let due=inferDate(cleaned);
+ let priority=cleaned.includes("紧急")?"紧急":cleaned.includes("重要")?"重要":"普通";
+ let intent=inferIntent(cleaned);
+ return {title,category,due,priority,intent,cleaned};
+}
+function mergeVoiceCorrection(existing,newText){
+ const parsed=summarizeSpeech(newText);
+ const mergedRaw=(existing.rawText?existing.rawText+"；":"")+newText;
+ let mergedTitle=existing.title;
+ const t=normalizeSpeech(newText);
+ // correction cues replace/adjust existing understanding instead of creating new task
+ if(/不是|改成|我的意思是|更准确地说|应该是|补充|另外|还有/.test(newText)){
+   mergedTitle = normalizeSpeech(
+      t.replace(/^(不是|改成|我的意思是|更准确地说|应该是|补充|另外|还有)[，,:：\s]*/,"")
+   ) || existing.title;
+ } else {
+   // continue context: append only if it adds different info
+   if(t && !existing.title.includes(t)) mergedTitle=(existing.title+"；"+t).slice(0,140);
+ }
+ const category = parsed.category!=="其他" ? parsed.category : existing.category;
+ const due = parsed.due!==iso() || /今天|明天|后天|下周/.test(newText) ? parsed.due : existing.due;
+ const priority = parsed.priority!=="普通" ? parsed.priority : existing.priority;
+ const intent = parsed.intent!=="记录并跟进" ? parsed.intent : (existing.intent||"记录并跟进");
+ return {...existing,title:mergedTitle,category,due,priority,intent,rawText:mergedRaw,updated:iso()};
+}
+
+function splitVoice(text){
+ return text.split(/[。；;\n]+/).map(x=>x.trim()).filter(Boolean)
+}
+async function smartCreate(text){
+ const parsed=await parseSpeechSmart(text);
+
+ // If there is an unconfirmed draft, treat further speech as correction to same draft
+ if(pendingVoiceDraft){
+   const tempExisting={
+     id:"draft",
+     title:pendingVoiceDraft.title,
+     category:pendingVoiceDraft.category,
+     priority:pendingVoiceDraft.priority,
+     due:pendingVoiceDraft.due,
+     intent:pendingVoiceDraft.intent,
+     rawText:pendingVoiceDraft.rawText||""
+   };
+   const merged=mergeVoiceCorrection(tempExisting,text);
+   pendingVoiceDraft={
+     title:merged.title,category:merged.category,priority:merged.priority,
+     due:merged.due,intent:merged.intent,rawText:merged.rawText,
+     confidence:Math.max(.55,(pendingVoiceDraft.confidence||.75)-.03),
+     engine:pendingVoiceDraft.engine||"本地智能规则",
+     rationale:pendingVoiceDraft.rationale||""
+   };
+   showVoiceDraft();
+   voiceTip.textContent="已根据补充内容修正这同一条事项";
+   toast("已修正当前语音草稿，没有新增第二条");
+   return;
+ }
+
+ // If a confirmed voice task is still active, update same task
+ if(activeVoiceTaskId){
+   tasks=tasks.map(t=>t.id===activeVoiceTaskId?mergeVoiceCorrection(t,text):t);
+   save();renderAll();
+   const current=tasks.find(t=>t.id===activeVoiceTaskId);
+   voiceTip.textContent=`已更新并保存：${current?.title||""}`;
+   toast("已修正原事项并保存，没有新增第二条");
+   return;
+ }
+
+ // First speech: do not write immediately; create one draft for confirmation
+ pendingVoiceDraft={
+   title:parsed.title,
+   category:parsed.category,
+   priority:parsed.priority,
+   due:parsed.due,
+   intent:parsed.intent,
+   rawText:text,
+   confidence:parsed.confidence,
+   engine:parsed.engine,
+   rationale:parsed.rationale||""
+ };
+ showVoiceDraft();
+ openPanel("today");
+ voiceTip.textContent="已归纳，请确认后写入";
+ toast("语音已归纳为1条事项，请确认")
+}
+
+function refreshCategoryOptions(){
+ categories=getCategories();
+ if(window.taskCategory){
+   const current=taskCategory.value;
+   taskCategory.innerHTML=categories.map(c=>`<option>${c}</option>`).join("");
+   if(categories.includes(current))taskCategory.value=current;
+ }
+ if(window.draftCategory){
+   const current=draftCategory.value;
+   draftCategory.innerHTML=categories.map(c=>`<option>${c}</option>`).join("");
+   if(categories.includes(current))draftCategory.value=current;
+ }
+}
+function showVoiceDraft(){
+ if(!pendingVoiceDraft)return;
+ document.getElementById("voiceDraftCard").style.display="block";
+ refreshCategoryOptions();
+ draftTitle.value=pendingVoiceDraft.title;
+ draftCategory.value=pendingVoiceDraft.category;
+ draftPriority.value=pendingVoiceDraft.priority;
+ draftDue.value=pendingVoiceDraft.due;
+ draftIntent.value=pendingVoiceDraft.intent||"";
+ const cf=Math.round((pendingVoiceDraft.confidence||0)*100);
+ draftConfidence.innerHTML=`识别引擎：<b>${pendingVoiceDraft.engine||"本地智能规则"}</b> · 置信度：<b>${cf}%</b>${cf<70?" · <span style='color:#e9862c'>建议重点核对</span>":""}${pendingVoiceDraft.rationale?" · "+pendingVoiceDraft.rationale:""}`;
+ draftRaw.textContent="原始语音："+(pendingVoiceDraft.rawText||"");
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+function confirmVoiceDraft(){
+ if(!pendingVoiceDraft)return;
+ const id=Date.now();
+ const t={
+   id,
+   title:draftTitle.value.trim()||pendingVoiceDraft.title,
+   category:draftCategory.value,
+   priority:draftPriority.value,
+   due:draftDue.value||pendingVoiceDraft.due,
+   intent:draftIntent.value.trim()||pendingVoiceDraft.intent,
+   rawText:pendingVoiceDraft.rawText,
+   done:false,
+   created:iso(),
+   updated:iso(),
+   note:`语音归纳｜意图：${draftIntent.value.trim()||pendingVoiceDraft.intent}`,
+   voiceConversation:true,
+   aiConfidence:pendingVoiceDraft.confidence||0,
+   aiEngine:pendingVoiceDraft.engine||"本地智能规则"
+ };
+ tasks.unshift(t);
+ activeVoiceTaskId=id;
+ pendingVoiceDraft=null;
+ document.getElementById("voiceDraftCard").style.display="none";
+ finishVoiceBtn.style.display="block";
+ save();renderAll();
+ voiceTip.textContent=`已写入：${t.title}`;
+ toast("已确认并写入工作事项")
+}
+function cancelVoiceDraft(){
+ pendingVoiceDraft=null;
+ document.getElementById("voiceDraftCard").style.display="none";
+ voiceTip.textContent="请重新说一遍，我会重新归纳";
+ toast("已取消当前语音草稿")
+}
+
+function manualAdd(){
+ let title=taskTitle.value.trim(); if(!title)return toast("请输入事项名称");
+ tasks.unshift({id:Date.now(),title,category:taskCategory.value,priority:taskPriority.value,due:taskDue.value||iso(),reminder:taskReminder.value,done:false,created:iso(),note:taskNote.value.trim()});
+ taskTitle.value="";taskNote.value="";save();renderAll();toast("事项已保存")
+}
+function toggleTask(id){tasks=tasks.map(t=>t.id===id?({...t,done:!t.done}):t);save();renderAll()}
+function delTask(id){
+ const item=tasks.find(t=>t.id===id);
+ if(!item)return;
+ deletedTasks.unshift({...item,deletedAt:new Date().toISOString()});
+ tasks=tasks.filter(t=>t.id!==id);
+ save();renderAll();renderRecycle();
+ toast("已移入回收站，可恢复");
+}
+function restoreTask(id){
+ const item=deletedTasks.find(t=>t.id===id);
+ if(!item)return;
+ const {deletedAt,...rest}=item;
+ tasks.unshift(rest);
+ deletedTasks=deletedTasks.filter(t=>t.id!==id);
+ save();renderAll();renderRecycle();
+ toast("事项已恢复");
+}
+function permanentlyDelete(id){
+ deletedTasks=deletedTasks.filter(t=>t.id!==id);
+ save();renderRecycle();
+ toast("已永久删除");
+}
+function clearRecycle(){
+ if(!deletedTasks.length)return toast("回收站为空");
+ if(confirm("确认清空回收站？清空后无法恢复。")){
+   deletedTasks=[];save();renderRecycle();toast("回收站已清空")
+ }
+}
+function categoryOptions(selected){
+ return categories.map(c=>`<option ${c===selected?"selected":""}>${c}</option>`).join("")
+}
+function updateCategory(id,newCategory){
+ tasks=tasks.map(t=>t.id===id?({...t,category:newCategory,manualCategory:true}):t);
+ save();renderAll();toast("分类已调整，后续可用于优化自动识别")
+}
+function taskHTML(t,i=0){
+ return `<div class="task">
+   <div class="num">${i+1}</div>
+   <div>
+     <div class="taskTitle">${t.title}</div>
+     <div class="taskDesc">${t.note||"工作事项"}</div>
+     ${t.intent?`<div class="taskDesc" style="margin-top:4px"><b>识别意图：</b>${t.intent}</div>`:""}
+     ${t.aiEngine?`<div class="taskDesc" style="margin-top:4px"><b>识别方式：</b>${t.aiEngine}${t.aiConfidence?` · ${Math.round(t.aiConfidence*100)}%`:""}</div>`:""}
+     ${t.rawText?`<details style="margin-top:6px"><summary class="taskDesc" style="cursor:pointer"><b>查看原始语音</b></summary><div class="taskDesc" style="margin-top:5px">${t.rawText}</div></details>`:""}
+     <div class="taskDesc" style="margin-top:5px"><b>价值评估：</b>${calcWorkValue(t).score}分 · ${calcWorkValue(t).level}</div>
+     <div style="margin-top:8px">
+       <select onchange="updateCategory(${t.id},this.value)" style="max-width:180px;padding:7px 9px;font-size:12px">
+         ${categoryOptions(t.category)}
+       </select>
+       ${t.manualCategory?`<span class="tag" style="margin-left:6px;background:#f3f0ff;color:#735bd6">已人工校正</span>`:""}
+     </div>
+   </div>
+   <div class="taskRight">
+     <span class="tag">${t.priority}</span>
+     <div class="time">${t.due}${t.reminder?` · ${t.reminder}`:""}</div>
+     <div style="margin-top:7px">
+       <button class="more" onclick="toggleTask(${t.id})">${t.done?"恢复":"完成"}</button>
+       <button class="more" onclick="delTask(${t.id})">删除</button>
+     </div>
+   </div>
+ </div>`
+}
+function renderStats(){
+ const td=iso(), todays=tasks.filter(t=>t.due===td), done=todays.filter(t=>t.done).length, overdue=tasks.filter(t=>!t.done&&t.due<td).length, leader=tasks.filter(t=>!t.done&&t.category==="领导交办").length;
+ stats.innerHTML=[["待办事项",Math.max(0,todays.length-done)],["已完成",done],["逾期事项",overdue],["领导交办",leader]].map((x,i)=>`<div class="stat"><b>${x[1]}</b><span>${x[0]}</span></div>`).join("")
+}
+function renderFocus(){
+ let list=tasks.filter(t=>!t.done).sort((a,b)=>a.due.localeCompare(b.due)).slice(0,3);
+ focusTasks.innerHTML=list.length?list.map(taskHTML).join(""):`<div class="hint" style="margin-top:12px">今天还没有重点事项，按住下方语音按钮直接说一件事。</div>`
+}
+function renderAllTasks(){allTasks.innerHTML=tasks.length?tasks.map(taskHTML).join(""):`<div class="hint" style="margin-top:12px">暂无工作事项。</div>`}
+function renderRecycle(){
+ const el=document.getElementById("recycleList");
+ if(!el)return;
+ el.innerHTML=deletedTasks.length?deletedTasks.map((t,i)=>`
+   <div class="task">
+     <div class="num">${i+1}</div>
+     <div>
+       <div class="taskTitle">${t.title}</div>
+       <div class="taskDesc">${t.category} · 删除时间 ${t.deletedAt?new Date(t.deletedAt).toLocaleString("zh-CN"):""}</div>
+     </div>
+     <div class="taskRight">
+       <button class="more" onclick="restoreTask(${t.id})">恢复</button>
+       <button class="more" onclick="permanentlyDelete(${t.id})">永久删除</button>
+     </div>
+   </div>`).join(""):`<div class="hint" style="margin-top:10px">回收站为空。</div>`;
+}
+function renderValues(){
+ const map={}; tasks.filter(t=>t.created===iso()||t.due===iso()).forEach(t=>{let v=values[t.category]||"运营保障";map[v]=(map[v]||0)+1});
+ let arr=Object.entries(map).sort((a,b)=>b[1]-a[1]).slice(0,3);
+ if(!arr.length)arr=[["人才保障",0],["风险控制",0],["经营支持",0]];
+ todayValues.innerHTML=arr.map(([k,v])=>`<div class="valueBox"><b>${k}</b><span>${valueDesc[k]||""}</span></div>`).join("")
+}
+function countBy(fn){
+ const m={};tasks.forEach(t=>{let k=fn(t);m[k]=(m[k]||0)+1});return m
+}
+function renderBars(id,obj){
+ const max=Math.max(1,...Object.values(obj));document.getElementById(id).innerHTML=Object.entries(obj).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<div class="barRow"><div class="barTop"><span>${k}</span><b>${v}</b></div><div class="barTrack"><div class="barFill" style="width:${v/max*100}%"></div></div></div>`).join("")||`<div class="hint">暂无数据</div>`
+}
+function renderAnalysis(){
+ let total=tasks.length,done=tasks.filter(t=>t.done).length,over=tasks.filter(t=>!t.done&&t.due<iso()).length;
+ let avgScore=total?Math.round(tasks.reduce((s,t)=>s+calcWorkValue(t).score,0)/total):0;
+ let highValue=tasks.filter(t=>calcWorkValue(t).score>=60).length;
+ let c=countBy(t=>t.category), top=Object.entries(c).sort((a,b)=>b[1]-a[1])[0];
+ analysisText.textContent=`累计记录 ${total} 项工作，已完成 ${done} 项，当前逾期 ${over} 项。${top?`\n目前工作投入最多的是「${top[0]}」，共 ${top[1]} 项。`:""}\n平均工作价值评分 ${avgScore} 分，关键及高价值事项 ${highValue} 项。\n\n建议持续观察：临时事项占比、领导交办闭环率、逾期事项、高频重复事务，并将重复工作逐步转化为标准流程。`;
+ renderBars("categoryBars",c); renderBars("valueBars",countBy(t=>values[t.category]||"运营保障"))
+}
+function genReport(type){
+ let list=tasks, now=new Date();
+ if(type==="day")list=tasks.filter(t=>t.created===iso()||t.due===iso());
+ if(type==="week"){let s=new Date();s.setDate(s.getDate()-6);list=tasks.filter(t=>new Date(t.created)>=s)}
+ if(type==="month"){let p=iso().slice(0,7);list=tasks.filter(t=>t.created.startsWith(p))}
+ let title=type==="day"?"今日工作日报":type==="week"?"本周工作周报":"本月工作月报";
+ const done=list.filter(t=>t.done),pending=list.filter(t=>!t.done),groups={};list.forEach(t=>(groups[t.category]=groups[t.category]||[]).push(t));
+ let txt=`${title}\n\n一、工作概览\n共记录 ${list.length} 项，已完成 ${done.length} 项，待跟进 ${pending.length} 项。\n\n二、分类工作\n`;
+ Object.entries(groups).forEach(([k,v])=>{txt+=`\n【${k}】\n${v.map(t=>`- ${t.done?"✓":"○"} ${t.title}`).join("\n")}\n`});
+ txt+=`\n三、重点待跟进\n${pending.slice(0,8).map(t=>"- "+t.title+"（"+t.due+"）").join("\n")||"暂无"}\n\n四、工作价值\n${[...new Set(list.map(t=>values[t.category]||"运营保障"))].map(v=>"- "+v+"："+(valueDesc[v]||"")).join("\n")||"暂无"}\n\n五、下一步建议\n优先处理逾期与紧急事项；对重复事务形成SOP；对领导交办及时反馈结果并闭环。`;
+ reportBox.textContent=txt
+}
+function openPanel(name){
+ document.querySelectorAll(".panel").forEach(x=>x.classList.remove("active"));
+ document.getElementById(name+"Panel").classList.add("active");
+ document.querySelectorAll(".navBtn").forEach(x=>x.classList.remove("active"));
+ document.getElementById("nav-"+name).classList.add("active");
+ window.scrollTo({top:0,behavior:"smooth"});renderAll()
+}
+function buildCalendar(){
+ const y=calCursor.getFullYear(),m=calCursor.getMonth();calendarTitle.textContent=`${y}年${m+1}月`;
+ const first=new Date(y,m,1), last=new Date(y,m+1,0);
+ const names=["日","一","二","三","四","五","六"];let html=names.map(n=>`<div class="dayName">${n}</div>`).join("");
+ for(let i=0;i<first.getDay();i++)html+=`<div></div>`;
+ for(let d=1;d<=last.getDate();d++){let ds=`${y}-${String(m+1).padStart(2,"0")}-${String(d).padStart(2,"0")}`,has=tasks.some(t=>t.due===ds);html+=`<div class="day ${has?"has":""}">${d}</div>`}
+ calendar.innerHTML=html;
+ let prefix=`${y}-${String(m+1).padStart(2,"0")}`;let list=tasks.filter(t=>t.due.startsWith(prefix)).sort((a,b)=>a.due.localeCompare(b.due));monthTasks.innerHTML=list.length?list.map(taskHTML).join(""):`<div class="hint" style="margin-top:12px">本月暂无到期事项。</div>`
+}
+function changeMonth(n){calCursor.setMonth(calCursor.getMonth()+n);buildCalendar()}
+function finishVoiceConversation(){
+ activeVoiceTaskId=null;
+ activeVoiceRaw=[];
+ activeVoiceMode=false;
+ finishVoiceBtn.style.display="none";
+ voiceTip.textContent="随手记一件事 · 自动去口语、整理并归纳；识别异常可手工录入";
+ toast("本条语音事项已确认完成")
+}
+function startVoiceWeb(e){
+ if(e && e.preventDefault)e.preventDefault();
+ const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+ if(!SR){
+   voiceLabel.textContent="暂不支持";
+   voiceTip.textContent="当前浏览器不支持语音识别，请使用最新版 Chrome / Edge，或先手工录入";
+   toast("当前浏览器暂不支持语音识别");
+   return;
+ }
+ try{
+   const r=new SR();
+   r.lang="zh-CN";
+   r.continuous=false;
+   r.interimResults=true;
+   r.maxAlternatives=1;
+
+   let finalText="";
+   let latestText="";
+   let started=false;
+   let hasSubmitted=false;
+
+   r.onstart=()=>{
+     started=true;
+     voiceLabel.textContent="正在听…";
+     voiceTip.textContent=activeVoiceTaskId
+       ?"继续补充，我只会修正当前这一条"
+       :"请直接说事项，我会自动整理并归纳";
+   };
+
+   r.onresult=ev=>{
+     let interim="";
+     let currentFinal="";
+     for(let i=ev.resultIndex;i<ev.results.length;i++){
+       const txt=(ev.results[i][0].transcript||"").trim();
+       if(!txt) continue;
+       if(ev.results[i].isFinal) currentFinal+=txt;
+       else interim+=txt;
+     }
+
+     if(currentFinal) finalText+=currentFinal;
+     latestText=(finalText+interim).trim();
+
+     if(latestText){
+       voiceTip.textContent=latestText;
+     }
+   };
+
+   r.onerror=ev=>{
+     voiceLabel.textContent="按住说话";
+     const map={
+       "not-allowed":"麦克风权限未开启",
+       "service-not-allowed":"浏览器未允许语音服务",
+       "no-speech":"没有识别到语音",
+       "audio-capture":"未检测到麦克风",
+       "network":"语音识别网络异常",
+       "aborted":"语音识别已结束"
+     };
+     const msg=map[ev.error]||("语音识别失败："+ev.error);
+     voiceTip.textContent=msg;
+     if(ev.error!=="aborted") toast(msg);
+   };
+
+   r.onend=()=>{
+     voiceLabel.textContent="按住说话";
+
+     // 核心修复：Edge/Chrome 有时只返回 interim，不返回 final。
+     // 只要界面上已经识别到文字，就用 latestText 提交。
+     const text=(finalText.trim() || latestText.trim());
+
+     if(text && !hasSubmitted){
+       hasSubmitted=true;
+       smartCreate(text);
+       finishVoiceBtn.style.display="block";
+
+       const current=tasks.find(t=>t.id===activeVoiceTaskId);
+       if(current){
+         voiceTip.textContent=`已记录：${current.title}`;
+       }else{
+         voiceTip.textContent="语音内容已整理并记录";
+       }
+     }else if(started && !text){
+       voiceTip.textContent=activeVoiceTaskId
+         ?"没有识别到新的补充内容，可继续说"
+         :"没有识别到有效语音，请再试一次";
+     }
+   };
+
+   r.start();
+ }catch(err){
+   console.error(err);
+   voiceLabel.textContent="按住说话";
+   voiceTip.textContent="语音模块启动失败，请刷新页面后重试";
+   toast("语音模块启动失败");
+ }
+}
+
+function escapeXml(v){
+ return String(v??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
+}
+function exportExcel(){
+ if(!tasks.length){toast("暂无事项可导出");return}
+ const headers=["事项名称","识别意图","原始语音","HR模块分类","所属行业","优先级","截止日期","完成状态","识别方式","识别置信度","工作价值类型","工作价值评分","价值等级","备注","创建日期","分类方式"];
+ const rows=tasks.map(t=>[
+   t.title,
+   t.intent||"",
+   t.rawText||"",
+   t.category,
+   userIndustry,
+   t.priority,
+   t.due,
+   t.done?"已完成":"未完成",
+   t.aiEngine||"手工/本地",
+   t.aiConfidence?Math.round(t.aiConfidence*100)+"%":"",
+   (values[t.category]||"运营保障")+" - "+(valueDesc[values[t.category]]||""),
+   calcWorkValue(t).score,
+   calcWorkValue(t).level,
+   t.note||"",
+   t.created||"",
+   t.manualCategory?"人工校正":"自动识别"
+ ]);
+ const xmlHead=`<?xml version="1.0"?>
+<?mso-application progid="Excel.Sheet"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:o="urn:schemas-microsoft-com:office:office"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">
+ <Worksheet ss:Name="HR工作事项"><Table>`;
+ const xmlRows=[headers,...rows].map((row,ri)=>{
+   return "<Row>"+row.map(v=>`<Cell><Data ss:Type="String">${escapeXml(v)}</Data></Cell>`).join("")+"</Row>"
+ }).join("");
+ const xmlTail=`</Table></Worksheet></Workbook>`;
+ const blob=new Blob(["\ufeff"+xmlHead+xmlRows+xmlTail],{type:"application/vnd.ms-excel"});
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement("a");
+ a.href=url;
+ a.download=`知序HR工作事项_${iso()}.xls`;
+ document.body.appendChild(a);
+ a.click();
+ a.remove();
+ URL.revokeObjectURL(url);
+ toast("Excel已导出")
+}
+
+function seedDemo(){
+ tasks=[
+  {id:1,title:"确认安全总监候选人",category:"招聘配置",priority:"重要",due:iso(),done:false,created:iso(),note:"与用人部门沟通，确定面试人选"},
+  {id:2,title:"跟进资质人员情况",category:"资质证照",priority:"重要",due:iso(new Date(Date.now()+86400000)),done:false,created:iso(),note:"整理证书到期时间，与项目部确认"},
+  {id:3,title:"完成项目绩效方案",category:"绩效管理",priority:"重要",due:iso(new Date(Date.now()+2*86400000)),done:false,created:iso(),note:"根据前期沟通意见完善方案"},
+  {id:4,title:"整理本周领导交办清单",category:"领导交办",priority:"普通",due:iso(),done:true,created:iso(),note:"形成闭环记录"}
+ ];save();renderAll();toast("已载入示例数据")
+}
+function showLearn(){toast("后续V3可加入HR每日微课知识库")}
+
+
+
+
+
+
+let onboardingStep=1;
+const onboardingPages=[
+ `<div class="guideBox"><b>第1步｜先选行业</b><br>进入“设置”，选择通用版、建筑工程、制造业、零售连锁、互联网科技、服务业或自定义行业。系统会据此调整分类和价值权重。</div>`,
+ `<div class="guideBox"><b>第2步｜直接说一件事</b><br>首页按住语音按钮说话。系统会先整理成一条事项草稿，你确认后再写入。理解偏差时继续补充，只修正这一条，不新增第二条。</div>`,
+ `<div class="guideBox"><b>第3步｜每天形成工作资产</b><br>完成事项后，系统会自动沉淀到日报、周报、月报、工作价值分析和Excel导出中。</div>`,
+ `<div class="guideBox"><b>第4步｜记得备份</b><br>系统默认保存在当前浏览器本地。建议每周到“设置 → 数据备份与恢复”导出一次备份文件。</div>`
+];
+function renderOnboarding(){
+ onboardingContent.innerHTML=onboardingPages[onboardingStep-1];
+ for(let i=1;i<=4;i++)document.getElementById("dot"+i).classList.toggle("active",i===onboardingStep);
+ prevGuideBtn.style.visibility=onboardingStep===1?"hidden":"visible";
+ nextGuideBtn.textContent=onboardingStep===4?"开始使用":"下一步";
+}
+function showOnboarding(){
+ onboardingStep=1;
+ renderOnboarding();
+ onboardingMask.classList.add("show");
+}
+function nextOnboarding(){
+ if(onboardingStep<4){onboardingStep++;renderOnboarding()}
+ else finishOnboarding();
+}
+function prevOnboarding(){
+ if(onboardingStep>1){onboardingStep--;renderOnboarding()}
+}
+function finishOnboarding(){
+ localStorage.setItem("zx_hr_onboarding_done","1");
+ onboardingDone=true;
+ onboardingMask.classList.remove("show");
+}
+
+function setAiMode(mode){
+ aiMode=mode;
+ localStorage.setItem("zx_hr_ai_mode",mode);
+ renderSettings();
+ toast(mode==="local"?"已切换到本地免费模式":"已开启自带AI增强设置");
+}
+
+function saveByokSettings(){
+ aiEndpoint=aiEndpointInput.value.trim();
+ aiModel=aiModelInput.value.trim();
+ aiKey=aiKeyInput.value.trim();
+
+ if(!aiEndpoint || !aiModel || !aiKey){
+   toast("请完整填写接口地址、模型名称和API Key");
+   return;
+ }
+
+ localStorage.setItem("zx_hr_ai_endpoint",aiEndpoint);
+ localStorage.setItem("zx_hr_ai_model",aiModel);
+ sessionStorage.setItem("zx_hr_ai_key",aiKey);
+ aiMode="byok";
+ localStorage.setItem("zx_hr_ai_mode","byok");
+ renderSettings();
+ toast("自带AI设置已保存，仅本次浏览器会话有效");
+}
+
+function clearAiKey(){
+ aiKey="";
+ sessionStorage.removeItem("zx_hr_ai_key");
+ if(window.aiKeyInput) aiKeyInput.value="";
+ toast("API Key已清除");
+ renderSettings();
+}
+
+async function testAiConnection(){
+ if(!aiEndpoint || !aiModel || !aiKey){
+   toast("请先保存完整的AI配置");
+   return;
+ }
+ aiStatus.textContent="正在测试AI连接…";
+ try{
+   const resp=await fetch(aiEndpoint,{
+     method:"POST",
+     headers:{
+       "Content-Type":"application/json",
+       "Authorization":"Bearer "+aiKey
+     },
+     body:JSON.stringify({
+       model:aiModel,
+       messages:[
+         {role:"system",content:"只回复OK"},
+         {role:"user",content:"连接测试"}
+       ],
+       temperature:0
+     })
+   });
+   if(!resp.ok) throw new Error("HTTP "+resp.status);
+   aiStatus.textContent="AI连接成功。语音归纳将优先使用用户自带AI。";
+   toast("AI连接成功");
+ }catch(err){
+   aiStatus.textContent="AI连接失败，将继续使用本地免费模式。可能原因：接口地址、模型名、Key、网络或浏览器跨域限制。";
+   toast("AI连接失败，已保留本地模式");
+ }
+}
+
+function changeIndustry(v){
+ userIndustry=v;
+ localStorage.setItem("zx_hr_industry",v);
+ refreshCategoryOptions();
+ renderSettings();
+ toast("行业模板已切换为："+v);
+}
+function addCustomCategory(){
+ const v=customCategoryInput.value.trim();
+ if(!v)return toast("请输入分类名称");
+ if(!customCategories.includes(v))customCategories.push(v);
+ localStorage.setItem("zx_hr_custom_categories",JSON.stringify(customCategories));
+ customCategoryInput.value="";
+ refreshCategoryOptions();
+ renderSettings();
+ toast("已添加自定义分类")
+}
+function removeCustomCategory(v){
+ customCategories=customCategories.filter(x=>x!==v);
+ localStorage.setItem("zx_hr_custom_categories",JSON.stringify(customCategories));
+ refreshCategoryOptions();
+ renderSettings();
+}
+function renderSettings(){
+ if(document.getElementById("industrySelect")){
+   industrySelect.value=userIndustry;
+   customCategoryList.innerHTML=customCategories.length
+    ?customCategories.map(c=>`<span class="tag" style="margin:4px">${c} <button onclick="removeCustomCategory('${c}')" style="border:none;background:transparent;color:#735bd6">×</button></span>`).join("")
+    :`<div class="hint">暂无自定义分类。</div>`;
+   notifyStatus.textContent=("Notification" in window)
+      ?("当前提醒权限："+Notification.permission)
+      :"当前浏览器不支持系统通知。";
+   if(window.byokSettings){
+     byokSettings.style.display=aiMode==="byok"?"block":"none";
+     localModeBtn.style.outline=aiMode==="local"?"2px solid #3f79f7":"none";
+     byokModeBtn.style.outline=aiMode==="byok"?"2px solid #3f79f7":"none";
+     aiEndpointInput.value=aiEndpoint||"";
+     aiModelInput.value=aiModel||"";
+     aiKeyInput.value=aiKey||"";
+     aiStatus.textContent=aiMode==="local"
+       ?"当前：本地免费模式。核心功能可长期使用，不产生AI调用费用。"
+       :(aiKey
+          ?"当前：自带AI增强模式。AI费用由用户自己的AI账户承担；失败时自动回退本地模式。"
+          :"当前：自带AI增强已开启，但尚未输入API Key；系统会继续使用本地模式。");
+   }
+   
+ }
+}
+
+function backupAllData(){
+ const backup={
+   product:"知序HR AI工作管家",
+   version:"3.0",
+   exportedAt:new Date().toISOString(),
+   tasks,
+   deletedTasks,
+   userIndustry,
+   customCategories,
+   settings:{
+     aiMode,
+     aiEndpoint,
+     aiModel
+   }
+ };
+ const blob=new Blob([JSON.stringify(backup,null,2)],{type:"application/json"});
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement("a");
+ a.href=url;
+ a.download=`知序HR数据备份_${iso()}.json`;
+ document.body.appendChild(a);
+ a.click();
+ a.remove();
+ URL.revokeObjectURL(url);
+ toast("数据备份已导出")
+}
+function restoreAllData(event){
+ const file=event.target.files?.[0];
+ if(!file)return;
+ const reader=new FileReader();
+ reader.onload=()=>{
+   try{
+     const data=JSON.parse(reader.result);
+     if(!Array.isArray(data.tasks))throw new Error("备份格式不正确");
+     if(!confirm("恢复备份会覆盖当前事项数据，是否继续？"))return;
+     tasks=data.tasks||[];
+     deletedTasks=data.deletedTasks||[];
+     userIndustry=data.userIndustry||"通用版";
+     customCategories=data.customCategories||[];
+     if(data.settings){
+       aiMode=data.settings.aiMode||"local";
+       aiEndpoint=data.settings.aiEndpoint||"";
+       aiModel=data.settings.aiModel||"";
+     }
+     localStorage.setItem("zx_hr_industry",userIndustry);
+     localStorage.setItem("zx_hr_custom_categories",JSON.stringify(customCategories));
+     localStorage.setItem("zx_hr_ai_mode",aiMode);
+     localStorage.setItem("zx_hr_ai_endpoint",aiEndpoint);
+     localStorage.setItem("zx_hr_ai_model",aiModel);
+     save();
+     refreshCategoryOptions();
+     renderAll();
+     toast("数据已恢复");
+   }catch(err){
+     toast("备份文件无法识别，请确认文件是否正确");
+   }finally{
+     event.target.value="";
+   }
+ };
+ reader.readAsText(file,"utf-8");
+}
+
+function requestNotifyPermission(){
+ if(!("Notification" in window))return toast("当前浏览器不支持系统通知");
+ Notification.requestPermission().then(p=>{
+   renderSettings();
+   toast(p==="granted"?"提醒权限已开启":"提醒权限未开启");
+ });
+}
+function checkDueNotifications(){
+ if(!("Notification" in window) || Notification.permission!=="granted")return;
+ const today=iso();
+ const due=tasks.filter(t=>!t.done && t.due===today);
+ if(due.length){
+   const key="zx_hr_notice_"+today;
+   if(!sessionStorage.getItem(key)){
+     new Notification("知序HR工作提醒",{body:`今天有 ${due.length} 项待办，请及时处理。`});
+     sessionStorage.setItem(key,"1");
+   }
+ }
+}
+
+function renderAll(){renderStats();renderFocus();renderAllTasks();renderRecycle();renderValues();renderAnalysis();buildCalendar();renderSettings();checkDueNotifications()}
+document.getElementById("dateText").textContent=new Date().toLocaleDateString("zh-CN",{month:"long",day:"numeric",weekday:"short"});
+refreshCategoryOptions();
+taskDue.value=iso();changeQuote();renderAll();renderSettings();
+setTimeout(()=>{if(!onboardingDone)showOnboarding()},350);
+if("serviceWorker" in navigator){navigator.serviceWorker.register("./sw.js").catch(()=>{})}
+
+let deferredInstallPrompt=null;
+
+window.addEventListener("beforeinstallprompt",(e)=>{
+  e.preventDefault();
+  deferredInstallPrompt=e;
+  if(!localStorage.getItem("zx_hr_install_dismissed")){
+    installBanner.classList.add("show");
+  }
+});
+
+window.addEventListener("appinstalled",()=>{
+  installBanner.classList.remove("show");
+  deferredInstallPrompt=null;
+  toast("已安装到桌面");
+});
+
+function getPlatformType(){
+  const ua=navigator.userAgent||"";
+  if(/iPhone|iPad|iPod/i.test(ua))return "ios";
+  if(/Android/i.test(ua))return "android";
+  if(/HarmonyOS|HUAWEI/i.test(ua))return "harmony";
+  return "other";
+}
+
+function maybeShowInstallBanner(){
+  const standalone=window.matchMedia && window.matchMedia("(display-mode: standalone)").matches;
+  if(standalone)return;
+  const p=getPlatformType();
+  if(localStorage.getItem("zx_hr_install_dismissed"))return;
+  if(p==="ios"){
+    installHint.textContent="Safari：分享 → 添加到主屏幕";
+    installBtn.textContent="查看方法";
+    installBanner.classList.add("show");
+  }else if(p==="harmony"){
+    installHint.textContent="浏览器菜单中查找“添加到桌面/安装应用”";
+  }else if(p==="android"){
+    installHint.textContent="支持时可直接安装到桌面";
+  }
+}
+
+async function installPWA(){
+  const p=getPlatformType();
+  if(deferredInstallPrompt){
+    deferredInstallPrompt.prompt();
+    await deferredInstallPrompt.userChoice;
+    deferredInstallPrompt=null;
+    installBanner.classList.remove("show");
+    return;
+  }
+  if(p==="ios"){
+    alert("iPhone 安装方法：\n1. 使用 Safari 打开本页面\n2. 点击底部“分享”按钮\n3. 选择“添加到主屏幕”\n4. 点击“添加”即可");
+  }else{
+    alert("请打开浏览器菜单，查找“安装应用”“添加到桌面”或“添加到主屏幕”。不同手机浏览器名称可能略有不同。");
+  }
+}
+
+function dismissInstall(){
+  localStorage.setItem("zx_hr_install_dismissed","1");
+  installBanner.classList.remove("show");
+}
+
+function showInstallHelp(){
+  const p=getPlatformType();
+  if(p==="ios"){
+    alert("iPhone：\nSafari打开 → 分享 → 添加到主屏幕。\n\n建议使用Safari，以获得更稳定的PWA体验。");
+  }else if(p==="android"){
+    alert("安卓：\nChrome/Edge打开 → 浏览器菜单 → 安装应用/添加到主屏幕。\n\n如果出现顶部安装提示，可直接点击安装。");
+  }else if(p==="harmony"){
+    alert("鸿蒙：\n使用系统浏览器或兼容浏览器打开 → 菜单 → 添加到桌面/安装应用。\n\n不同版本入口名称可能略有差异。");
+  }else{
+    alert("请在浏览器菜单中选择“安装应用”或“添加到主屏幕”。");
+  }
+}
+
+setTimeout(maybeShowInstallBanner,700);
+
+
+function startVoice(e){
+ if(e && e.preventDefault)e.preventDefault();
+ if(nativeSpeechAvailable()){
+   voiceLabel.textContent="正在听…";
+   voiceTip.textContent="请直接说事项，我会自动整理并归纳";
+   try{ window.AndroidSpeech.startListening(); }
+   catch(err){ onNativeSpeechError("手机语音模块启动失败"); }
+   return;
+ }
+ startVoiceWeb(e);
+}
+
+function nativeSpeechAvailable(){
+  return !!(window.AndroidSpeech && typeof window.AndroidSpeech.startListening==="function");
+}
+window.onNativeSpeechResult=function(text){
+  if(!text)return;
+  voiceLabel.textContent="按住说话";
+  voiceTip.textContent=text;
+  smartCreate(text);
+};
+window.onNativeSpeechError=function(message){
+  voiceLabel.textContent="按住说话";
+  voiceTip.textContent=message||"语音识别失败";
+  toast(message||"语音识别失败");
+};
+
+</script>
+</body>
+</html>
+<!-- Android App shell build -->

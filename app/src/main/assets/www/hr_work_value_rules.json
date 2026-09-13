@@ -1,0 +1,243 @@
+{
+  "version": "1.0",
+  "dimensions": [
+    {
+      "key": "business",
+      "name": "业务影响",
+      "weight": 0.25,
+      "description": "对经营、项目交付、收入、关键业务连续性的影响"
+    },
+    {
+      "key": "risk",
+      "name": "风险影响",
+      "weight": 0.2,
+      "description": "劳动、合规、资质、证照、用工等风险程度"
+    },
+    {
+      "key": "talent",
+      "name": "人才影响",
+      "weight": 0.15,
+      "description": "对关键人才获取、保留、培养和配置的影响"
+    },
+    {
+      "key": "organization",
+      "name": "组织影响",
+      "weight": 0.15,
+      "description": "对组织效率、制度、流程、权责和协作的影响"
+    },
+    {
+      "key": "timeliness",
+      "name": "时效影响",
+      "weight": 0.1,
+      "description": "延误是否会造成明显后果"
+    },
+    {
+      "key": "sustainability",
+      "name": "持续价值",
+      "weight": 0.15,
+      "description": "是否可形成制度、流程、标准、知识沉淀或长期能力"
+    }
+  ],
+  "category_base": {
+    "人力资源规划": {
+      "business": 4,
+      "risk": 2,
+      "talent": 4,
+      "organization": 5,
+      "timeliness": 3,
+      "sustainability": 5
+    },
+    "招聘配置": {
+      "business": 4,
+      "risk": 2,
+      "talent": 5,
+      "organization": 3,
+      "timeliness": 4,
+      "sustainability": 3
+    },
+    "培训开发": {
+      "business": 3,
+      "risk": 1,
+      "talent": 5,
+      "organization": 4,
+      "timeliness": 2,
+      "sustainability": 5
+    },
+    "绩效管理": {
+      "business": 4,
+      "risk": 2,
+      "talent": 4,
+      "organization": 5,
+      "timeliness": 3,
+      "sustainability": 5
+    },
+    "薪酬福利": {
+      "business": 3,
+      "risk": 4,
+      "talent": 4,
+      "organization": 3,
+      "timeliness": 5,
+      "sustainability": 3
+    },
+    "员工关系": {
+      "business": 3,
+      "risk": 5,
+      "talent": 3,
+      "organization": 3,
+      "timeliness": 5,
+      "sustainability": 3
+    },
+    "资质证照": {
+      "business": 5,
+      "risk": 5,
+      "talent": 2,
+      "organization": 3,
+      "timeliness": 5,
+      "sustainability": 4
+    },
+    "行政管理": {
+      "business": 2,
+      "risk": 3,
+      "talent": 1,
+      "organization": 3,
+      "timeliness": 3,
+      "sustainability": 2
+    },
+    "企业文化": {
+      "business": 2,
+      "risk": 1,
+      "talent": 3,
+      "organization": 3,
+      "timeliness": 2,
+      "sustainability": 3
+    },
+    "党工团": {
+      "business": 2,
+      "risk": 3,
+      "talent": 2,
+      "organization": 2,
+      "timeliness": 3,
+      "sustainability": 3
+    },
+    "领导交办": {
+      "business": 4,
+      "risk": 3,
+      "talent": 2,
+      "organization": 3,
+      "timeliness": 5,
+      "sustainability": 2
+    },
+    "项目支持": {
+      "business": 5,
+      "risk": 3,
+      "talent": 3,
+      "organization": 3,
+      "timeliness": 5,
+      "sustainability": 3
+    },
+    "其他": {
+      "business": 2,
+      "risk": 2,
+      "talent": 2,
+      "organization": 2,
+      "timeliness": 2,
+      "sustainability": 2
+    }
+  },
+  "keyword_adjustments": [
+    {
+      "keywords": [
+        "劳动争议",
+        "仲裁",
+        "诉讼",
+        "解除",
+        "辞退",
+        "工伤",
+        "事故"
+      ],
+      "dimension": "risk",
+      "delta": 1
+    },
+    {
+      "keywords": [
+        "资质",
+        "安许",
+        "许可证",
+        "投标",
+        "备案",
+        "证书到期"
+      ],
+      "dimension": "business",
+      "delta": 1
+    },
+    {
+      "keywords": [
+        "关键岗位",
+        "项目经理",
+        "总监",
+        "核心人才"
+      ],
+      "dimension": "talent",
+      "delta": 1
+    },
+    {
+      "keywords": [
+        "制度",
+        "流程",
+        "SOP",
+        "标准",
+        "机制"
+      ],
+      "dimension": "sustainability",
+      "delta": 1
+    },
+    {
+      "keywords": [
+        "逾期",
+        "今天",
+        "立即",
+        "紧急",
+        "截止"
+      ],
+      "dimension": "timeliness",
+      "delta": 1
+    },
+    {
+      "keywords": [
+        "组织架构",
+        "权责",
+        "岗位职责",
+        "审批规则"
+      ],
+      "dimension": "organization",
+      "delta": 1
+    }
+  ],
+  "priority_adjustment": {
+    "普通": 0,
+    "重要": 5,
+    "紧急": 10
+  },
+  "level_ranges": [
+    {
+      "min": 0,
+      "max": 39,
+      "level": "一般事务"
+    },
+    {
+      "min": 40,
+      "max": 59,
+      "level": "重要事务"
+    },
+    {
+      "min": 60,
+      "max": 79,
+      "level": "关键事务"
+    },
+    {
+      "min": 80,
+      "max": 100,
+      "level": "战略/高价值事项"
+    }
+  ]
+}
