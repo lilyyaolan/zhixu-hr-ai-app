@@ -1,0 +1,42 @@
+知序 · HR AI工作管家｜只需上传一次
+
+这次上传完成后，以后我们不用再依赖ChatGPT里的临时文件链接。
+
+【你现在要做】
+1. 解压本压缩包。
+2. 打开 GitHub 仓库 lilyyaolan/zhixu-hr-ai-app
+3. 点击 Add file → Upload files。
+4. 把“解压后的所有文件和文件夹”拖进去。
+   注意：上传里面的内容，不是把ZIP本身上传。
+5. 页面下方点击 Commit changes，提交到 main。
+
+【上传后自动发生】
+GitHub Actions 会自动配置Android环境并编译APK。
+
+【以后拿APK有两个入口】
+A. Actions 临时构建产物：
+- 仓库 → Actions
+- 打开最新 Build Android APK
+- 页面底部 Artifacts
+- 下载 zhixu-hr-ai-apk
+- 产物保留30天
+
+B. Releases 长期测试版入口（推荐）：
+- 仓库 → Releases
+- 打开“知序HR AI工作管家｜最新测试版”
+- 下载 zhixu-hr-ai-test.apk
+
+以后每次代码升级后，latest-test 测试版会自动更新，
+不再依赖聊天里的 sandbox 下载地址。
+
+【正式销售提醒】
+当前仓库是 public（公开）。
+测试阶段可以用，但正式收费销售前，不建议让买家直接从公开GitHub下载，
+否则APK和源码都可能被公开获取。
+
+正式销售建议：
+1. GitHub只做内部构建；
+2. 测试通过后把源码仓库改成 Private；
+3. 正式签名APK上传到你的销售交付渠道；
+4. 买家付款后得到正式下载链接；
+5. 后续升级仍由GitHub自动构建，再替换销售端文件。
