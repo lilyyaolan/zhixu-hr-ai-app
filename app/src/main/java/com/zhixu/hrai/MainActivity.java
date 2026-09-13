@@ -17,8 +17,10 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -65,7 +67,29 @@ public class MainActivity extends AppCompatActivity {
         });
 
         webView.addJavascriptInterface(new SpeechBridge(), "AndroidSpeech");
-        webView.loadUrl("file:///android_asset/www/index.html");
+        loadBundledApp();
+    }
+
+    private void loadBundledApp() {
+        try (InputStream input = getAssets().open("www/index.html");
+             ByteArrayOutputStream output = new ByteArrayOutputStream()) {
+            byte[] buffer = new byte[8192];
+            int read;
+            while ((read = input.read(buffer)) != -1) {
+                output.write(buffer, 0, read);
+            }
+            String html = output.toString(StandardCharsets.UTF_8.name());
+            html = html.replace("}return \"其他\"}", "}");
+            webView.loadDataWithBaseURL(
+                    "file:///android_asset/www/",
+                    html,
+                    "text/html",
+                    "UTF-8",
+                    null
+            );
+        } catch (Exception e) {
+            webView.loadUrl("file:///android_asset/www/index.html");
+        }
     }
 
     public class SpeechBridge {
